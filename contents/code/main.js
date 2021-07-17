@@ -20,9 +20,9 @@
 // Utility Functions
 //
 
-var client;
-var screenGeometry;
-var xMargin = 5;
+var client;             // active window
+var screenGeometry;     // screen sizes
+var xMargin = 5;        // margin in pixels left and right
 
 function getGeometry() {
     client = workspace.activeClient;
@@ -104,9 +104,9 @@ function tileTopRight() {
 function tileCenterLandscape() {
     getGeometry();
 
-    var clientScaleX = 0.6;
-    var clientScaleY = 0.70;
-    resize(screenGeometry.width * clientScaleX, screenGeometry.height * clientScaleY);
+    var newWidth = screenGeometry.width * 0.60;
+    var newHeight = screenGeometry.height * 0.70;
+    resize(newWidth, newHeight);
 
     var newX = screenGeometry.x + (screenGeometry.width - client.width) / 2;
     var newY = screenGeometry.y + (screenGeometry.height - client.height) / 2;
@@ -115,45 +115,50 @@ function tileCenterLandscape() {
 
 function tileCenterPortrait() {
     getGeometry();
-    // var clientScaleX = 0.34;
-    // var clientScaleY = 0.60;
-    var newWidth = (screenGeometry.width - xMargin * 2) / 3;
+    var newWidth = (screenGeometry.width - xMargin * 2) / 3; // 3 equal widths
     var newHeight = screenGeometry.height * 0.60;
-    // resize(screenGeometry.width * clientScaleX, screenGeometry.height * clientScaleY);
     resize(newWidth, newHeight);
 
     var newX = screenGeometry.x + (screenGeometry.width - client.width) / 2;
     var newY = screenGeometry.y + (screenGeometry.height - client.height) / 2;
+    if ((newX == client.geometry.x)) {
+        // if window already in correct x position then resize larger.
+        newWidth *= 1.2;
+        newHeight *= 1.2;
+        resize(newWidth, newHeight);
+        newX = screenGeometry.x + (screenGeometry.width - client.width) / 2;
+        newY = screenGeometry.y + (screenGeometry.height - client.height) / 2;
+    }
     move(newX, newY);
 }
 
 function tileRightOfCenter() {
     getGeometry();
-    var clientScaleX = 0.34;
-    var clientScaleY = 0.60;
-    var newWidth = screenGeometry.width * clientScaleX;
-    resize(newWidth, screenGeometry.height * clientScaleY);
+    var newWidth = (screenGeometry.width - xMargin * 2) / 3; // 3 equal widths
+    var newHeight = screenGeometry.height * 0.60;
+    resize(newWidth, newHeight);
 
     var centerX = screenGeometry.x + (screenGeometry.width - client.width) / 2;
     var newX = centerX + client.width
     var newY = screenGeometry.y + (screenGeometry.height - client.height) / 2;
-    if ((newX == client.geometry.x) ) {
-            newX = screenGeometry.width - client.width - xMargin;
+    if ((newX == client.geometry.x)) {
+        // if window already in correct x position then snap to outside edge.
+        newX = screenGeometry.width - client.width - xMargin;
     }
     move(newX, newY);
 }
 
 function tileLeftOfCenter() {
     getGeometry();
-    var clientScaleX = 0.34;
-    var clientScaleY = 0.60;
-    var newWidth = screenGeometry.width * clientScaleX;
-    resize(newWidth, screenGeometry.height * clientScaleY);
+    var newWidth = (screenGeometry.width - xMargin * 2) / 3; // 3 equal widths
+    var newHeight = screenGeometry.height * 0.60;
+    resize(newWidth, newHeight);
 
     var centerX = screenGeometry.x + (screenGeometry.width - client.width) / 2;
     var newX = centerX - client.width;
     var newY = screenGeometry.y + (screenGeometry.height - client.height) / 2;
     if (newX == client.geometry.x) {
+        // if window already in correct x position then snap to outside edge.
         newX = screenGeometry.x + xMargin;
     }
     move(newX, newY);
