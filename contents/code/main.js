@@ -15,14 +15,21 @@
 //
 
 
-
 //
-// Utility Functions
+// vars
 //
 
 var client;             // active window
 var screenGeometry;     // screen sizes
 var xMargin = 5;        // margin in pixels left and right
+var mode = 2;           // starting mode
+var tile6SplitPercentageY = 0.55; // y percentage size of bottom windows
+var windowStateList = {};// keep state for every window
+
+
+//
+// Utility Functions
+//
 
 function getGeometry() {
     client = workspace.activeClient;
@@ -61,142 +68,240 @@ function resize(newWidth, newHeight) {
 // Tiling Functions
 //
 
-function tileBotLeft() {
+function tile4(placement) {
+    // valid placement values botleft, botright, topleft, topright
+    placement = placement || "botleft"; //default
+
     getGeometry();
-
-    var newWidth = screenGeometry.width / 2;
+    var newWidth = (screenGeometry.width / 2) - xMargin;
     var newHeight = screenGeometry.height / 2;
+    resize(newWidth, newHeight);
 
-    move(screenGeometry.x + xMargin, screenGeometry.y + newHeight);
-    resize(newWidth - xMargin, newHeight);
+    var newX;
+    var newY;
+
+    switch (placement) {
+        case "botleft":
+            newX = screenGeometry.x + xMargin;
+            newY = screenGeometry.y + newHeight;
+            break;
+        case "botright":
+            newX = screenGeometry.x + newWidth;
+            newY = screenGeometry.y + newHeight;
+            break;
+        case "topleft":
+            newX = screenGeometry.x + xMargin;
+            newY = screenGeometry.y;
+            break;
+        case "topright":
+            newX = screenGeometry.x + newWidth
+            newY = screenGeometry.y;
+            break;
+        default:
+            // this position should indicate error on screen
+            newX = 20;
+            newY = 20;
+            break;
+    }
+    move(newX, newY);
 }
 
-function tileBotRight() {
+function tile6(placement) {
+    // valid placement values botleft, botcenter, botright, topleft, topcenter, topright
+    placement = placement || "botcenter"; //default
+
     getGeometry();
+    var newWidth = (screenGeometry.width - xMargin * 2) / 3; // 3 equal widths
+    var newHeight = screenGeometry.height * tile6SplitPercentageY;
+    if (placement == "topleft" || placement == "topcenter" || placement == "topright") {
+        newHeight = screenGeometry.height - newHeight
+    }
+    resize(newWidth, newHeight);
 
-    var newWidth = screenGeometry.width / 2;
-    var newHeight = screenGeometry.height / 2;
+    var referenceX = (screenGeometry.width - client.width) / 2;
+    var newX = screenGeometry.x + referenceX;
+    var newY = screenGeometry.y + (screenGeometry.height - client.height);
 
-    move(screenGeometry.x + newWidth, screenGeometry.y + newHeight);
-    resize(newWidth - xMargin, newHeight);
+    if (placement == "topleft" || placement == "topcenter" || placement == "topright") {
+        newY = screenGeometry.y
+    }
+
+    switch (placement) {
+        case "botleft":
+        case "topleft":
+            newX -= client.width;
+            break;
+        case "botright":
+        case "topright":
+            newX += client.width;
+            break;
+        case "topcenter":
+        case "botcenter":
+            //do nothing
+            break;
+        default:
+            // this position should indicate error on screen
+            newX = 70;
+            newY = 20;
+            break;
+    }
+    move(newX, newY);
 }
 
-function tileTopLeft() {
+function focus1(style) {
+    style = style || "none"; //default
+    // bring to center, first landscape and then portrait
     getGeometry();
+    var newWidth;
+    var newHeight;
 
-    var newWidth = screenGeometry.width / 2;
-    var newHeight = screenGeometry.height / 2;
+    if (style == "portrait") { windowStateList[client.windowId] = 1; }
+    if (style == "landscape") { windowStateList[client.windowId] = 0; }
 
-    move(screenGeometry.x + xMargin, screenGeometry.y);
-    resize(newWidth - xMargin, newHeight);
+
+    // windowStateList keeps the state for each windowId encountered.
+    switch (windowStateList[client.windowId]) {
+        case 1:
+            // Portrait
+            newWidth = screenGeometry.width * 0.35;
+            newHeight = screenGeometry.height * 0.70;
+            windowStateList[client.windowId] = 0
+            break;
+        case 0:
+        default:
+            // Landscape
+            newWidth = screenGeometry.width * 0.60;
+            newHeight = screenGeometry.height * 0.60;
+            windowStateList[client.windowId] = 1
+            break;
+    }
+    resize(newWidth, newHeight);
+
+    var newX = screenGeometry.x + (screenGeometry.width - client.width) / 2;
+    var newY = screenGeometry.y + (screenGeometry.height - client.height) / 2;
+    move(newX, newY);
 }
 
-function tileTopRight() {
+function focus2(placement) {
+    // Place left or right of center 
+    placement = placement || "left"; //default
     getGeometry();
-
-    var newWidth = screenGeometry.width / 2;
-    var newHeight = screenGeometry.height / 2;
-
-    move(screenGeometry.x + newWidth, screenGeometry.y);
-    resize(newWidth - xMargin, newHeight);
-}
-
-function tileCenterLandscape() {
-    getGeometry();
-
-    var newWidth = screenGeometry.width * 0.60;
+    var newWidth = screenGeometry.width * 0.35;
     var newHeight = screenGeometry.height * 0.70;
     resize(newWidth, newHeight);
 
+    var newY = screenGeometry.y + (screenGeometry.height - client.height) / 2;
     var newX = screenGeometry.x + (screenGeometry.width - client.width) / 2;
-    var newY = screenGeometry.y + (screenGeometry.height - client.height) / 2;
-    move(newX, newY);
-}
 
-function tileCenterPortrait() {
-    getGeometry();
-    var newWidth = (screenGeometry.width - xMargin * 2) / 3; // 3 equal widths
-    var newHeight = screenGeometry.height * 0.60;
-    resize(newWidth, newHeight);
-
-    var newX = screenGeometry.x + (screenGeometry.width - client.width) / 2;
-    var newY = screenGeometry.y + (screenGeometry.height - client.height) / 2;
-    if ((newX == client.geometry.x)) {
-        // if window already in correct x position then resize larger.
-        newWidth *= 1.2;
-        newHeight *= 1.2;
-        resize(newWidth, newHeight);
-        newX = screenGeometry.x + (screenGeometry.width - client.width) / 2;
-        newY = screenGeometry.y + (screenGeometry.height - client.height) / 2;
+    if (placement == "right") {
+        newX += client.width / 2;
+    } else {
+        newX -= client.width / 2;
     }
     move(newX, newY);
 }
-
-function tileRightOfCenter() {
-    getGeometry();
-    var newWidth = (screenGeometry.width - xMargin * 2) / 3; // 3 equal widths
-    var newHeight = screenGeometry.height * 0.60;
-    resize(newWidth, newHeight);
-
-    var centerX = screenGeometry.x + (screenGeometry.width - client.width) / 2;
-    var newX = centerX + client.width
-    var newY = screenGeometry.y + (screenGeometry.height - client.height) / 2;
-    if ((newX == client.geometry.x)) {
-        // if window already in correct x position then snap to outside edge.
-        newX = screenGeometry.width - client.width - xMargin;
-    }
-    move(newX, newY);
-}
-
-function tileLeftOfCenter() {
-    getGeometry();
-    var newWidth = (screenGeometry.width - xMargin * 2) / 3; // 3 equal widths
-    var newHeight = screenGeometry.height * 0.60;
-    resize(newWidth, newHeight);
-
-    var centerX = screenGeometry.x + (screenGeometry.width - client.width) / 2;
-    var newX = centerX - client.width;
-    var newY = screenGeometry.y + (screenGeometry.height - client.height) / 2;
-    if (newX == client.geometry.x) {
-        // if window already in correct x position then snap to outside edge.
-        newX = screenGeometry.x + xMargin;
-    }
-    move(newX, newY);
-}
-
 
 //
 // Register Shortcuts
 //
 
-registerShortcut("RCTilerBotLeft1", "RCTiler Bot Left", "Meta+Num+1", function () {
-    tileBotLeft();
+registerShortcut("RCTilerBotLeft1", "RCTiler(1) Bot Left", "Meta+Num+1", function () {
+    switch (mode) {
+        case 2:
+            tile6("botleft");
+            break;
+        default:
+            tile4("botleft");
+    }
 });
 
-registerShortcut("RCTilerBotRight3", "RCTiler Bot Right", "Meta+Num+3", function () {
-    tileBotRight();
+registerShortcut("RCTilerTop2", "RCTiler(2) Bot", "Meta+Num+2", function () {
+    switch (mode) {
+        case 2:
+            tile6("botcenter");
+            break;
+        default:
+            focus1("landscape");
+    }
 });
 
-registerShortcut("RCTilerTopLeft7", "RCTiler Top Left", "Meta+Num+7", function () {
-    tileTopLeft();
+registerShortcut("RCTilerBotRight3", "RCTiler(3) Bot Right", "Meta+Num+3", function () {
+    switch (mode) {
+        case 2:
+            tile6("botright");
+            break;
+        default:
+            tile4("botright");
+        // tileBotRight();
+    }
 });
 
-registerShortcut("RCTilerTopRight9", "RCTiler Top Right", "Meta+Num+9", function () {
-    tileTopRight();
+registerShortcut("RCTilerLeft4", "RCTiler(4) Left", "Meta+Num+4", function () {
+    switch (mode) {
+        case 2:
+            focus2("left");
+            break;
+        default:
+            focus2("left");
+    }
 });
 
-registerShortcut("RCTilerCenterPortrait5", "RCTiler Center-Portrait", "Meta+Num+5", function () {
-    tileCenterPortrait();
+registerShortcut("RCTilerCenter5", "RCTiler(5) Center", "Meta+Num+5", function () {
+    switch (mode) {
+        case 2:
+            focus1();
+            break;
+        default:
+            focus1();
+    }
 });
 
-registerShortcut("RCTilerCenterLandscape2", "RCTiler Center-Landscape", "Meta+Num+2", function () {
-    tileCenterLandscape();
+registerShortcut("RCTilerRight6", "RCTiler(6) Right", "Meta+Num+6", function () {
+    switch (mode) {
+        case 2:
+            focus2("right");
+            break;
+        default:
+            focus2("right");
+    }
 });
 
-registerShortcut("RCTilerRightOfCenter6", "RCTiler Right of Center", "Meta+Num+6", function () {
-    tileRightOfCenter();
+registerShortcut("RCTilerTopLeft7", "RCTiler(7) Top Left", "Meta+Num+7", function () {
+    switch (mode) {
+        case 2:
+            tile6("topleft");
+            break;
+        default:
+            tile4("topleft");
+        // tileTopLeft();
+    }
 });
 
-registerShortcut("RCTilerLeftOfCenter4", "RCTiler Left of Center", "Meta+Num+4", function () {
-    tileLeftOfCenter();
+registerShortcut("RCTilerTopLeft8", "RCTiler(8) Top", "Meta+Num+8", function () {
+    switch (mode) {
+        case 2:
+            tile6("topcenter");
+            break;
+        default:
+            focus1("portrait");
+    }
+});
+
+registerShortcut("RCTilerTopRight9", "RCTiler(9) Top Right", "Meta+Num+9", function () {
+    switch (mode) {
+        case 2:
+            tile6("topright");
+            break;
+        default:
+            tile4("topright");
+        // tileTopRight();
+    }
+});
+
+registerShortcut("RCTilerMode1", "RCTiler(m1) Mode 1", "Meta+Num+/", function () {
+    mode = 1; //default mode
+});
+
+registerShortcut("RCTilerMode2", "RCTiler(m2) Mode 2", "Meta+Num+*", function () {
+    mode = 2;
 });

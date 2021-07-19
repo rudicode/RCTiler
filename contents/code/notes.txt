@@ -1,0 +1,48 @@
+Feature Ideas
+
+- Add shortcut keys to make a window active. eg. Meta+Ctrl+Num+3 makes Lower Right window
+active. If there is more than one window in the area then cycle through them.
+  - It may be interesting to assign each window a zone number when it is originaly placed into
+  that zone. That way even if the window is moved by other means it will still cycle through.
+  - Need a shortcut to remove a window from a zone.
+  - When a window that was assigne a zone is moved to center with Meta+Num+5 there can be a shortcut
+    to move it back to its assigned zone. Maybe a further cycle of same shortcut?
+    Landscape -> Portrait -> Zone (if avaliable).
+
+Tile6 zones
++---+---+---+
+| 7 | 8 | 9 |
++---+---+---+
+| 1 | 2 | 3 | split percentage of lower window (default 55%)
++---+---+---+
+
+Tile4 zones
++-----+-----+
+|7    |    9|
++-----+-----+
+|1    |    3| split percentage of lower window (default 50%)
++---+---+---+
+
+Make 2 type of Focus zones
+
+Focus1 zones
++---+---+---+
+|  +--|--+  |
++  |  5  |  +
+|  +--|--+  |
++---+---+---+
+
+  - Focus1 will let you use Meta+Num+5
+  - Cycle: Landscape and Portrait
+
+
+Focus2 zones
++---+---+---+
+|  +--|--+  |
++  |4-|-6|  +
+|  +--|--+  |
++---+---+---+
+
+  - Focuse2 will use Meta+Num+4 and Meta+Num+6
+  - Portrait left of center and right of center
+
