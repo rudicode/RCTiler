@@ -23,7 +23,7 @@ Tile4 zones
 |1    |    3| split percentage of lower window (default 50%)
 +---+---+---+
 
-Make 2 type of Focus zones
+Make 2 types of Focus zones
 
 Focus1 zones
 +---+---+---+
