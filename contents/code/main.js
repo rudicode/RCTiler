@@ -201,9 +201,27 @@ function focus2(placement) {
     move(newX, newY);
 }
 
+function focus3() {
+    //  center window
+    getGeometry();
+    var newY = screenGeometry.y + (screenGeometry.height - client.height) / 2;
+    var newX = screenGeometry.x + (screenGeometry.width - client.width) / 2;
+    move(newX, newY);
+}
+
 //
 // Register Shortcuts
 //
+
+registerShortcut("RCTilerCenter", "RCTiler(0) Center", "Meta+Num+0", function () {
+    switch (mode) {
+        case 2:
+            focus3("centeronly");
+            break;
+        default:
+            focus3("centeronly");
+    }
+});
 
 registerShortcut("RCTilerBotLeft1", "RCTiler(1) Bot Left", "Meta+Num+1", function () {
     switch (mode) {
