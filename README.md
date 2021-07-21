@@ -1,4 +1,5 @@
-#RCTiler
+RCTiler
+=======
 
 Script to handle tiling windows on large resolution screens. Developed on 50" monitor (3840x2160 4k)
 
@@ -7,7 +8,8 @@ The tiler currently has 2 modes (Tile4 and Tile6), which split the screen into 4
 The shortcuts are all positioned around the numberpad.
 You canswitch between modes anytime using Meta+Num+/ , Meta+Num+*
 
-###Tile4 mode
+Tile4 mode
+----------
 ```
 ( Meta+Num+/ ) to select Tile4 mode
 Tile4 - place windows in one of 4 quarants
@@ -41,7 +43,8 @@ Focus2 - resize (portrait) and place window left or right of center line
 
 ```
 
-###Tile6 mode
+Tile6 mode
+----------
 ```
 ( Meta+Num+* ) to select Tile6 mode
 Tile6 - place windows on 3x2 grid
