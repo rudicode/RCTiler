@@ -183,7 +183,7 @@ function focus1(style) {
 }
 
 function focus2(placement) {
-    // Place left or right of center 
+    // Place left or right of center
     placement = placement || "left"; //default
     getGeometry();
     var newWidth = screenGeometry.width * 0.35;
@@ -250,7 +250,6 @@ registerShortcut("RCTilerBotRight3", "RCTiler(3) Bot Right", "Meta+Num+3", funct
             break;
         default:
             tile4("botright");
-        // tileBotRight();
     }
 });
 
@@ -291,7 +290,6 @@ registerShortcut("RCTilerTopLeft7", "RCTiler(7) Top Left", "Meta+Num+7", functio
             break;
         default:
             tile4("topleft");
-        // tileTopLeft();
     }
 });
 
@@ -312,7 +310,6 @@ registerShortcut("RCTilerTopRight9", "RCTiler(9) Top Right", "Meta+Num+9", funct
             break;
         default:
             tile4("topright");
-        // tileTopRight();
     }
 });
 
