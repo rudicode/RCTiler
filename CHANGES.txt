@@ -1,0 +1,2 @@
+Version 0.4.3
+  - Changed Tile4 mode, Meta+Num+2 and Meta+Num+8, 1/2 height and keep screen aspect ratio.

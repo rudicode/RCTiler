@@ -28,8 +28,16 @@ Focus1 - place window in center and cycle between resize Landscape and Portrait
 +  |  5  |  +
 |  +--|--+  |
 +-----+-----+
-( Meta+Num+8 ) place in center and resize window portrait.
-( Meta+Num+2 ) place in center and resize window landscape.
+
+( Meta+Num+8 ) resize to half_screen_height keep screen aspect ratio, place in x-center
+               and y to top
+( Meta+Num+2 ) resize to half_screen_height keep screen aspect ratio, place in x-center
+               and y to bot
++--+-----+--+
+|  |  8  |  |
+|  +-----+  |
+|  |  2  |  |
++--+-----+--+
 
 Focus2 - resize (portrait) and place window left or right of center line
 ( Meta+Num+4 ,  Meta+Num+6 )

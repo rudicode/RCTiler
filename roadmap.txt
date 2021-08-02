@@ -1,5 +1,8 @@
 Feature Ideas
 
+- Change shortcuts so that there is no more need to switch with Meta+Num+/ or Meta+Num+*
+  maybe use Meta for Tile4 and Meta-Ctrl for Tile6
+
 - Add shortcut keys to make a window active. eg. Meta+Ctrl+Num+3 makes Lower Right window
 active. If there is more than one window in the area then cycle through them.
   - It may be interesting to assign each window a zone number when it is originaly placed into

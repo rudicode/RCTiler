@@ -94,7 +94,15 @@ function tile4(placement) {
             newY = screenGeometry.y;
             break;
         case "topright":
-            newX = screenGeometry.x + newWidth
+            newX = screenGeometry.x + newWidth;
+            newY = screenGeometry.y;
+            break;
+        case "botcenter":
+            newX = screenGeometry.x + (newWidth / 2);
+            newY = screenGeometry.y + newHeight;
+            break;
+        case "topcenter":
+            newX = screenGeometry.x + (newWidth / 2);
             newY = screenGeometry.y;
             break;
         default:
@@ -239,7 +247,7 @@ registerShortcut("RCTilerTop2", "RCTiler(2) Bot", "Meta+Num+2", function () {
             tile6("botcenter");
             break;
         default:
-            focus1("landscape");
+            tile4("botcenter");
     }
 });
 
@@ -299,7 +307,7 @@ registerShortcut("RCTilerTopLeft8", "RCTiler(8) Top", "Meta+Num+8", function () 
             tile6("topcenter");
             break;
         default:
-            focus1("portrait");
+            tile4("topcenter");
     }
 });
 
