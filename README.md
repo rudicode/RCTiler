@@ -6,15 +6,13 @@ Script to handle tiling windows on large resolution screens. Developed on 50" mo
 The tiler currently has 2 modes (Tile4 and Tile6), which split the screen into 4 or 6 sections.
 
 The shortcuts are all positioned around the numberpad.
-You canswitch between modes anytime using Meta+Num+/ , Meta+Num+*
 
 Tile4 mode
 ----------
 ```
-( Meta+Num+/ ) to select Tile4 mode
 Tile4 - place windows in one of 4 quarants
 
-( Meta+Num+1 ,  Meta+Num+3 , Meta+Num+7 , Meta+Num+9 )
+( Meta+Ctrl+Num+1 ,  Meta+Ctrl+Num+3 , Meta+Ctrl+Num+7 , Meta+Ctrl+Num+9 )
 +-----+-----+
 | 7   |   9 |
 +-----+-----+
@@ -22,17 +20,15 @@ Tile4 - place windows in one of 4 quarants
 +-----+-----+
 
 Focus1 - place window in center and cycle between resize Landscape and Portrait
-( Meta+Num+5 )
-+-----+-----+
-|  +--|--+  |
+( Meta+Ctrl+Num+5 )
++-----------+
+|  +-----+  |
 +  |  5  |  +
-|  +--|--+  |
-+-----+-----+
+|  +-----+  |
++-----------+
 
-( Meta+Num+8 ) resize to half_screen_height keep screen aspect ratio, place in x-center
-               and y to top
-( Meta+Num+2 ) resize to half_screen_height keep screen aspect ratio, place in x-center
-               and y to bot
+( Meta+Ctrl+Num+8 ) resize to half screen height keep screen aspect ratio, place in x-center and y to top
+( Meta+Ctrl+Num+2 ) resize to half screen height keep screen aspect ratio, place in x-center and y to bot
 +--+-----+--+
 |  |  8  |  |
 |  +-----+  |
@@ -40,21 +36,20 @@ Focus1 - place window in center and cycle between resize Landscape and Portrait
 +--+-----+--+
 
 Focus2 - resize (portrait) and place window left or right of center line
-( Meta+Num+4 ,  Meta+Num+6 )
-+-----+-----+
-|  +--|--+  |
+( Meta+Ctrl+Num+4 ,  Meta+Ctrl+Num+6 )
++-----------+
+|  +--+--+  |
 +  |4 | 6|  +
-|  +--|--+  |
-+-----+-----+
+|  +--+--+  |
++-----------+
 
-( Meta+Num+0 ) Center Window Only
+( Meta+Ctrl+Num+0 ) Center Window Only
 
 ```
 
 Tile6 mode
 ----------
 ```
-( Meta+Num+* ) to select Tile6 mode
 Tile6 - place windows on 3x2 grid
 
 ( Meta+Num+1 ,  Meta+Num+2 , Meta+Num+3 , Meta+Num+7 , Meta+Num+8 , Meta+Num+9 )
@@ -67,18 +62,18 @@ Tile6 - place windows on 3x2 grid
 Focus1 - place window in center and cycle resize Landscape and Portrait
 ( Meta+Num+5 )
 +---+---+---+
-|  +--|--+  |
+|  +-----+  |
 +  |  5  |  +
-|  +--|--+  |
+|  +-----+  |
 +---+---+---+
 
 Focus2 - resize (portrait) and place window left or right of center line
 ( Meta+Num+4 ,  Meta+Num+6 )
-+-----+-----+
-|  +--|--+  |
++-----------+
+|  +--+--+  |
 +  |4 | 6|  +
-|  +--|--+  |
-+-----+-----+
+|  +--+--+  |
++-----------+
 
 ( Meta+Num+0 ) Center Window Only
 

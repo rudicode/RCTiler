@@ -22,7 +22,6 @@
 var client;             // active window
 var screenGeometry;     // screen sizes
 var xMargin = 5;        // margin in pixels left and right
-var mode = 2;           // starting mode
 var tile6SplitPercentageY = 0.55; // y percentage size of bottom windows
 var windowStateList = {};// keep state for every window
 
@@ -221,110 +220,24 @@ function focus3() {
 // Register Shortcuts
 //
 
-registerShortcut("RCTilerCenter", "RCTiler(0) Center", "Meta+Num+0", function () {
-    switch (mode) {
-        case 2:
-            focus3("centeronly");
-            break;
-        default:
-            focus3("centeronly");
-    }
-});
+registerShortcut("RCTiler4Center", "RCTiler4(0) Center", "Meta+Ctrl+Num+0", function () { focus3("centeronly"); });
+registerShortcut("RCTiler4BotLeft1", "RCTiler4(1) Bot Left", "Meta+Ctrl+Num+1", function () { tile4("botleft"); });
+registerShortcut("RCTiler4Top2", "RCTiler4(2) Bot", "Meta+Ctrl+Num+2", function () { tile4("botcenter"); });
+registerShortcut("RCTiler4BotRight3", "RCTiler4(3) Bot Right", "Meta+Ctrl+Num+3", function () { tile4("botright"); });
+registerShortcut("RCTiler4Left4", "RCTiler4(4) Left", "Meta+Ctrl+Num+4", function () { focus2("left"); });
+registerShortcut("RCTiler4Center5", "RCTiler4(5) Center", "Meta+Ctrl+Num+5", function () { focus1(); });
+registerShortcut("RCTiler4Right6", "RCTiler4(6) Right", "Meta+Ctrl+Num+6", function () { focus2("right"); });
+registerShortcut("RCTiler4TopLeft7", "RCTiler4(7) Top Left", "Meta+Ctrl+Num+7", function () { tile4("topleft"); });
+registerShortcut("RCTiler4TopLeft8", "RCTiler4(8) Top", "Meta+Ctrl+Num+8", function () { tile4("topcenter"); });
+registerShortcut("RCTiler4TopRight9", "RCTiler4(9) Top Right", "Meta+Ctrl+Num+9", function () { tile4("topright"); });
 
-registerShortcut("RCTilerBotLeft1", "RCTiler(1) Bot Left", "Meta+Num+1", function () {
-    switch (mode) {
-        case 2:
-            tile6("botleft");
-            break;
-        default:
-            tile4("botleft");
-    }
-});
-
-registerShortcut("RCTilerTop2", "RCTiler(2) Bot", "Meta+Num+2", function () {
-    switch (mode) {
-        case 2:
-            tile6("botcenter");
-            break;
-        default:
-            tile4("botcenter");
-    }
-});
-
-registerShortcut("RCTilerBotRight3", "RCTiler(3) Bot Right", "Meta+Num+3", function () {
-    switch (mode) {
-        case 2:
-            tile6("botright");
-            break;
-        default:
-            tile4("botright");
-    }
-});
-
-registerShortcut("RCTilerLeft4", "RCTiler(4) Left", "Meta+Num+4", function () {
-    switch (mode) {
-        case 2:
-            focus2("left");
-            break;
-        default:
-            focus2("left");
-    }
-});
-
-registerShortcut("RCTilerCenter5", "RCTiler(5) Center", "Meta+Num+5", function () {
-    switch (mode) {
-        case 2:
-            focus1();
-            break;
-        default:
-            focus1();
-    }
-});
-
-registerShortcut("RCTilerRight6", "RCTiler(6) Right", "Meta+Num+6", function () {
-    switch (mode) {
-        case 2:
-            focus2("right");
-            break;
-        default:
-            focus2("right");
-    }
-});
-
-registerShortcut("RCTilerTopLeft7", "RCTiler(7) Top Left", "Meta+Num+7", function () {
-    switch (mode) {
-        case 2:
-            tile6("topleft");
-            break;
-        default:
-            tile4("topleft");
-    }
-});
-
-registerShortcut("RCTilerTopLeft8", "RCTiler(8) Top", "Meta+Num+8", function () {
-    switch (mode) {
-        case 2:
-            tile6("topcenter");
-            break;
-        default:
-            tile4("topcenter");
-    }
-});
-
-registerShortcut("RCTilerTopRight9", "RCTiler(9) Top Right", "Meta+Num+9", function () {
-    switch (mode) {
-        case 2:
-            tile6("topright");
-            break;
-        default:
-            tile4("topright");
-    }
-});
-
-registerShortcut("RCTilerMode1", "RCTiler(m1) Mode 1", "Meta+Num+/", function () {
-    mode = 1; //default mode
-});
-
-registerShortcut("RCTilerMode2", "RCTiler(m2) Mode 2", "Meta+Num+*", function () {
-    mode = 2;
-});
+registerShortcut("RCTiler6Center", "RCTiler6(0) Center", "Meta+Num+0", function () { focus3("centeronly"); });
+registerShortcut("RCTiler6BotLeft1", "RCTiler6(1) Bot Left", "Meta+Num+1", function () { tile6("botleft"); });
+registerShortcut("RCTiler6Top2", "RCTiler6(2) Bot", "Meta+Num+2", function () { tile6("botcenter"); });
+registerShortcut("RCTiler6BotRight3", "RCTiler6(3) Bot Right", "Meta+Num+3", function () { tile6("botright"); });
+registerShortcut("RCTiler6Left4", "RCTiler6(4) Left", "Meta+Num+4", function () { focus2("left"); });
+registerShortcut("RCTiler6Center5", "RCTiler6(5) Center", "Meta+Num+5", function () { focus1(); });
+registerShortcut("RCTiler6Right6", "RCTiler6(6) Right", "Meta+Num+6", function () { focus2("right"); });
+registerShortcut("RCTiler6TopLeft7", "RCTiler6(7) Top Left", "Meta+Num+7", function () { tile6("topleft"); });
+registerShortcut("RCTiler6TopLeft8", "RCTiler6(8) Top", "Meta+Num+8", function () { tile6("topcenter"); });
+registerShortcut("RCTiler6TopRight9", "RCTiler6(9) Top Right", "Meta+Num+9", function () { tile6("topright"); });

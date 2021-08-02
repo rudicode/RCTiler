@@ -1,3 +1,1 @@
-Issue 1
-  - When using focus1() and the window has been moved only, it should keep the same size and
-    only move to the center.
+Issues

@@ -1,9 +1,6 @@
 Feature Ideas
 
-- Change shortcuts so that there is no more need to switch with Meta+Num+/ or Meta+Num+*
-  maybe use Meta for Tile4 and Meta-Ctrl for Tile6
-
-- Add shortcut keys to make a window active. eg. Meta+Ctrl+Num+3 makes Lower Right window
+- Add shortcut keys to make a window active. eg. Meta+Alt+Num+3 makes Lower Right window
 active. If there is more than one window in the area then cycle through them.
   - It may be interesting to assign each window a zone number when it is originaly placed into
   that zone. That way even if the window is moved by other means it will still cycle through.
@@ -11,41 +8,3 @@ active. If there is more than one window in the area then cycle through them.
   - When a window that was assigne a zone is moved to center with Meta+Num+5 there can be a shortcut
     to move it back to its assigned zone. "Send back" function.
     Landscape -> Portrait -> Zone (if avaliable).
-
-Tile6 mode
-+---+---+---+
-| 7 | 8 | 9 |
-+---+---+---+
-| 1 | 2 | 3 | split percentage of lower window (default 55%)
-+---+---+---+
-
-Make 2 types of Focus zones
-
-Focus1
-+---+---+---+
-|  +--|--+  |
-+  |  5  |  +
-|  +--|--+  |
-+---+---+---+
-
-  - Focus1 will let you use Meta+Num+5
-  - Cycle: Centered Landscape and Portrait
-
-
-Tile4 mode
-+-----+-----+
-|7    |    9|
-+-----+-----+
-|1    |    3| split percentage of lower window (default 50%)
-+---+---+---+
-
-Focus2
-+---+---+---+
-|  +--|--+  |
-+  |4 | 6|  +
-|  +--|--+  |
-+---+---+---+
-
-  - Focuse2 will use Meta+Num+4 and Meta+Num+6
-  - Portrait left of center and right of center
-
