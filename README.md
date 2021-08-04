@@ -56,8 +56,10 @@ Tile6 - place windows on 3x2 grid
 +---+---+---+
 | 7 | 8 | 9 |
 +---+---+---+
-| 1 | 2 | 3 | split percentage of lower window (default 55%)
+| 1 | 2 | 3 |
 +---+---+---+
+bottom height ratio (default 55%)
+center width ratio (default 40%)
 
 Focus1 - place window in center and cycle resize Landscape and Portrait
 ( Meta+Num+5 )

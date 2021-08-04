@@ -19,11 +19,12 @@
 // vars
 //
 
-var client;             // active window
-var screenGeometry;     // screen sizes
-var xMargin = 5;        // margin in pixels left and right
-var tile6SplitPercentageY = 0.55; // y percentage size of bottom windows
-var windowStateList = {};// keep state for every window
+var client;                         // active window
+var screenGeometry;                 // screen sizes
+var xMargin = 5;                    // margin in pixels left and right
+var tile6bottomHeightRatio = 0.55;  // y percentage size of bottom windows
+var tile6centerWidthRatio = 0.40;   // % of width of screen for center zone
+var windowStateList = {};           // keep state for every window
 
 
 //
@@ -69,7 +70,7 @@ function resize(newWidth, newHeight) {
 
 function tile4(placement) {
     // valid placement values botleft, botright, topleft, topright
-    placement = placement || "botleft"; //default
+    placement = placement || "botleft"; // default
 
     getGeometry();
     var newWidth = (screenGeometry.width / 2) - xMargin;
@@ -115,13 +116,22 @@ function tile4(placement) {
 
 function tile6(placement) {
     // valid placement values botleft, botcenter, botright, topleft, topcenter, topright
-    placement = placement || "botcenter"; //default
+    placement = placement || "botcenter"; // default
 
     getGeometry();
-    var newWidth = (screenGeometry.width - xMargin * 2) / 3; // 3 equal widths
-    var newHeight = screenGeometry.height * tile6SplitPercentageY;
+    // calculate window width
+    var newWidth = (screenGeometry.width - xMargin * 2);
+    if ( placement == "topleft" || placement == "botleft" || placement == "topright" || placement == "botright" ) {
+        var widthRatio = (1.0 - tile6centerWidthRatio) / 2;
+        newWidth *= widthRatio;
+    } else {
+        newWidth *= tile6centerWidthRatio;
+    }
+
+    // calculate window height
+    var newHeight = screenGeometry.height * tile6bottomHeightRatio;
     if (placement == "topleft" || placement == "topcenter" || placement == "topright") {
-        newHeight = screenGeometry.height - newHeight
+        newHeight = screenGeometry.height - newHeight;
     }
     resize(newWidth, newHeight);
 
@@ -130,21 +140,21 @@ function tile6(placement) {
     var newY = screenGeometry.y + (screenGeometry.height - client.height);
 
     if (placement == "topleft" || placement == "topcenter" || placement == "topright") {
-        newY = screenGeometry.y
+        newY = screenGeometry.y;
     }
 
     switch (placement) {
         case "botleft":
         case "topleft":
-            newX -= client.width;
+            newX = screenGeometry.x + xMargin;
             break;
         case "botright":
         case "topright":
-            newX += client.width;
+            newX = screenGeometry.width - client.width - xMargin;
             break;
         case "topcenter":
         case "botcenter":
-            //do nothing
+            // do nothing
             break;
         default:
             // this position should indicate error on screen
@@ -191,7 +201,7 @@ function focus1(style) {
 
 function focus2(placement) {
     // Place left or right of center
-    placement = placement || "left"; //default
+    placement = placement || "left"; // default
     getGeometry();
     var newWidth = screenGeometry.width * 0.35;
     var newHeight = screenGeometry.height * 0.70;
@@ -209,7 +219,7 @@ function focus2(placement) {
 }
 
 function focus3() {
-    //  center window
+    // center window
     getGeometry();
     var newY = screenGeometry.y + (screenGeometry.height - client.height) / 2;
     var newX = screenGeometry.x + (screenGeometry.width - client.width) / 2;
