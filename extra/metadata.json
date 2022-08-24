@@ -1,0 +1,23 @@
+{
+  "KPlugin": {
+      "Name": "RCTiler",
+      "Description": "RCTiler manualy tile windows on large screens (4K)",
+      "Icon": "preferences-system-windows-move",
+      
+      "Authors": [
+          {
+              "Email": "rudi@rudicode.com",
+              "Name": "rudicode"
+          }
+      ],
+      "Id": "RCTiler",
+      "ServiceTypes": [
+          "KWin/Script"
+      ],
+      "Version": "0.4.5",
+      "Licsense": "GPLv2",
+      "Website": ""
+  },
+  "X-Plasma-API": "javascript",
+  "X-Plasma-MainScript": "code/main.js"
+}

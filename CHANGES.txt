@@ -1,3 +1,5 @@
+Version 0.4.5
+  - use frameGeometry instead of depricated geometry, to move and resize windows.
 Version 0.4.4
   - Added width ratio for Tile6 mode
 

@@ -1,0 +1,103 @@
+Notes for writing kwin-scripts
+
+# Install new script
+# plasmapkg2 --type kwinscript -i ~/code/kwin-scripts/mynewscrip/
+
+# Update existing script
+####(older ver)#### plasmapkg2 --type kwinscript -u ~/code/kwin-scripts/myexistingscript/
+kpackagetool5 --type=KWin/Script -u ~/code/kwin-scripts/RCTiler/
+
+# To take effect restart kwin
+# this does not work in kde5
+# killall kwin_x11 && kwin_x11 &
+
+# restart plasma in kde 5
+# kquitapp5 plasmashell && kstart5 plasmashell
+
+...
+### To debug the app, add print('print this); to the code.
+### update the kwin app with the rctiler.install.sh script ( chnage the location of project )
+### in another console use: journalctl -b0 -f
+### now trigger the part of the script you want to debug with print.
+### it should be displayed in the journal window.
+###
+### journalctl -g "js:" -f
+### may also work
+### see https://bugs.kde.org/show_bug.cgi?id=445058
+...
+
+#
+# Config is in ~/.config/kwinrc. You need only two command to change config file and apply:
+
+# kwriteconfig5 --file kwinrc --group <yourgroup> --key <yourkey> <parameter>
+# qdbus org.kde.KWin /KWin reconfigure
+
+# If you put it in script you can create dongle to change it, it’s my example script to switching Video Wall:
+
+# current=`kreadconfig5 --file kwinrc --group Plugins --key videowallEnabled`
+
+# if [ $current = "true" ]; then
+#   kwriteconfig5 --file kwinrc --group Plugins --key videowallEnabled false
+# elif [ $current = "false" ]; then
+#   kwriteconfig5 --file kwinrc --group Plugins --key videowallEnabled true
+# fi
+
+# qdbus org.kde.KWin /KWin reconfigure
+
+
+...
+
+
+Start Scripting Console
+qdbus-qt5 org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.showInteractiveKWinConsole
+
+
+...
+From redit
+https://www.reddit.com/r/kde/comments/js3ze6/developing_a_kwin_script/
+
+
+Zren
+ KDE Contributor
+
+For development, I recommend creating the HelloWorld/metadata.desktop and HelloWorld/contents/code/main.js files at ~/.local/share/kwin/scripts/. For testing open System Settings and disable the script and click apply, then enable the script and click apply. Doing it that way will unregister any signal handlers (event listeners).
+
+    Simple: https://store.kde.org/p/1165216/
+
+        https://gist.github.com/Zren/eee0fd27592cc0b1bbe4494195eff016
+
+        Connects newly created clients (windows) and existing clients (when the script was enabled) to clientFinishUserMovedResized. It checks if the caption (window title) matches Chrome, then will check if the window's position is in a certain location before applying an effect.
+
+    Advanced: https://github.com/Flupp/sticky-window-snapping/blob/master/contents/code/main.js#L87-L93
+
+        Also binds clientFinishUserMovedResized but has a lot more complex code.
+
+I'd recommend checking the client.resourceName and client.resourceClass to filter for the window class. Eg:
+
+function isFirefox(client) {
+    return client.resourceName == "Navigator" && client.resourceClass == "firefox";
+}
+
+To find out what the window class is in X11, run xprop and click the target window:
+
+$ xprop | grep WM_CLASS
+WM_CLASS(STRING) = "Navigator", "firefox"
+
+You can also bind to clientStepUserMovedResized to run the code while still resizing the window.
+
+client.clientStepUserMovedResized.connect(onClientFinishUserMovedResized);
+
+For quick testing, there's a KWin Scripting debug console. However if you screw up a connect signal handler, there's no way to easily unregister/reset which is why I recommended the other testing method.
+
+qdbus org.kde.plasmashell /PlasmaShell showInteractiveKWinConsole
+
+You can run the following in the debug console for quickly checking client properties.
+
+var clients = workspace.clientList();
+for (var i = 0; i < clients.length; i++) {
+    var client = clients[i];
+    print("client(resourceName=" + client.resourceName + ", resourceClass=" + client.resourceClass + ")");
+}
+
+...
+

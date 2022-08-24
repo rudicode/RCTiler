@@ -38,30 +38,31 @@ function getGeometry() {
 
 function move(newX, newY) {
     if (!client.moveable) {
+        // print('Not movable.')
         return;
     }
-    client.move = true;
-    client.geometry = {
+    // client.move = true;
+    client.frameGeometry = {
         x: newX,
         y: newY,
-        width: client.geometry.width,
-        height: client.geometry.height
+        width: client.frameGeometry.width,
+        height: client.frameGeometry.height
     };
-    client.move = false;
+    // client.move = false;
 }
 
 function resize(newWidth, newHeight) {
     if (!client.resizeable) {
         return;
     }
-    client.resize = true;
-    client.geometry = {
-        x: client.geometry.x,
-        y: client.geometry.y,
+    // client.resize = true;
+    client.frameGeometry = {
+        x: client.frameGeometry.x,
+        y: client.frameGeometry.y,
         width: newWidth,
         height: newHeight
     };
-    client.resize = false;
+    // client.resize = false;
 }
 
 //
