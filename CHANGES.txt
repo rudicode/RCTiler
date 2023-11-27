@@ -1,5 +1,10 @@
+Version 0.4.6
+  - Fix how topright and bottomright are calculated in tile4
+  - updated install script, so it can be used from anywhere.
+
 Version 0.4.5
   - use frameGeometry instead of depricated geometry, to move and resize windows.
+
 Version 0.4.4
   - Added width ratio for Tile6 mode
 

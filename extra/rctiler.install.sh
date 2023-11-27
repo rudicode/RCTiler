@@ -1,8 +1,18 @@
 #!/bin/bash
-# update script
+# install script used during development but can also be used to install
+# the plugin.
+
+# change to root of project
+cd $(dirname "${BASH_SOURCE[0]}")
+cd ..
+source_dir=$(pwd)
+echo "source_dir: $source_dir"
+
 # older version
-# plasmapkg2 --type kwinscript -u ~/code/kwin-scripts/RCTiler/
-kpackagetool5 --type=KWin/Script -u ~/code/kwin-scripts/RCTiler/
+# plasmapkg2 --type kwinscript -u $source_dir
+
+# newer versions
+kpackagetool5 --type=KWin/Script -u $source_dir
 
 # Disable plugin to take effect
 kwriteconfig5 --file kwinrc --group Plugins --key RCTilerEnabled false

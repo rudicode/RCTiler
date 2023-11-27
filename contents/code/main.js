@@ -1,4 +1,4 @@
-// Copyright (C) 2021 Rudi Luzar <rudi@rudicode.com>
+// Copyright (C) 2023 Rudi Luzar <rudi@rudicode.com>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -73,9 +73,13 @@ function tile4(placement) {
     // valid placement values botleft, botright, topleft, topright
     placement = placement || "botleft"; // default
 
+    // NOTE: screenGeometry.x and screenGeometry.y are usually 0
+    // NOTE: screenGeometry.width and screenGeometry.height is usually the total size
+    //       of the screen (eg. 1920x1080)
     getGeometry();
     var newWidth = (screenGeometry.width / 2) - xMargin;
     var newHeight = screenGeometry.height / 2;
+    var screenCenterX = screenGeometry.width /2 ; // NOTE: does not take into account screenGeometry.x
     resize(newWidth, newHeight);
 
     var newX;
@@ -87,7 +91,7 @@ function tile4(placement) {
             newY = screenGeometry.y + newHeight;
             break;
         case "botright":
-            newX = screenGeometry.x + newWidth;
+            newX = screenCenterX;
             newY = screenGeometry.y + newHeight;
             break;
         case "topleft":
@@ -95,7 +99,7 @@ function tile4(placement) {
             newY = screenGeometry.y;
             break;
         case "topright":
-            newX = screenGeometry.x + newWidth;
+            newX = screenCenterX;
             newY = screenGeometry.y;
             break;
         case "botcenter":
@@ -107,7 +111,7 @@ function tile4(placement) {
             newY = screenGeometry.y;
             break;
         default:
-            // this position should indicate error on screen
+            // this position should indicate 'placement' error on screen
             newX = 20;
             newY = 20;
             break;

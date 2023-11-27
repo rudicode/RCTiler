@@ -14,7 +14,7 @@
       "ServiceTypes": [
           "KWin/Script"
       ],
-      "Version": "0.4.5",
+      "Version": "0.4.6",
       "Licsense": "GPLv2",
       "Website": ""
   },
