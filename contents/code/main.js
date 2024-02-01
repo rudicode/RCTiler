@@ -13,7 +13,28 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 //
-
+//
+// DOCS
+//
+// https://develop.kde.org/docs/plasma/kwin/
+// https://develop.kde.org/docs/plasma/kwin/api
+//
+//
+// DEBUGGING NOTES
+//
+// Output
+// see: https://develop.kde.org/docs/plasma/kwin/#output
+// if it does not work properly
+//
+// You can use print(QVariant...) it's Comparable to console.log()
+// The print output of Plasma and KWin scripts can be read from the journal:
+//
+// journalctl -f QT_CATEGORY=js QT_CATEGORY=kwin_scripting
+//
+// example:
+// print(screenGeometry.width, newX, newWidth, " newY:", newY)
+//
+//
 
 //
 // vars
@@ -72,6 +93,7 @@ function resize(newWidth, newHeight) {
 function tile4(placement) {
     // valid placement values botleft, botright, topleft, topright
     placement = placement || "botleft"; // default
+    var largeCenterWidthRatio = 0.75;
 
     // NOTE: screenGeometry.x and screenGeometry.y are usually 0
     // NOTE: screenGeometry.width and screenGeometry.height is usually the total size
@@ -80,7 +102,6 @@ function tile4(placement) {
     var newWidth = (screenGeometry.width / 2) - xMargin;
     var newHeight = screenGeometry.height / 2;
     var screenCenterX = screenGeometry.width /2 ; // NOTE: does not take into account screenGeometry.x
-    resize(newWidth, newHeight);
 
     var newX;
     var newY;
@@ -103,25 +124,40 @@ function tile4(placement) {
             newY = screenGeometry.y;
             break;
         case "botcenter":
-            newX = screenGeometry.x + (newWidth / 2);
-            newY = screenGeometry.y + newHeight;
+            newX = Math.trunc(screenGeometry.x + (newWidth / 2));
+            newY = Math.trunc(screenGeometry.y + newHeight);
+
+            // if new position is same as current position then make it extra wide
+            if ( newX == client.frameGeometry.x && newY == client.frameGeometry.y) {
+                newWidth = (screenGeometry.width * largeCenterWidthRatio);
+                newX = screenGeometry.x + (screenGeometry.width / 2) - (newWidth / 2);
+            }
             break;
         case "topcenter":
-            newX = screenGeometry.x + (newWidth / 2);
+            newX = Math.trunc(screenGeometry.x + (newWidth / 2));
             newY = screenGeometry.y;
+
+            // if new position is same as current position then make it extra wide
+            if ( newX == client.frameGeometry.x && newY == client.frameGeometry.y) {
+                newWidth = (screenGeometry.width * largeCenterWidthRatio);
+                newX = screenGeometry.x + (screenGeometry.width / 2) - (newWidth / 2);
+            }
             break;
         default:
             // this position should indicate 'placement' error on screen
+            print("RCTiler:tile4() unknown placement name: ", placement)
             newX = 20;
             newY = 20;
             break;
     }
     move(newX, newY);
+    resize(newWidth, newHeight);
 }
 
 function tile6(placement) {
     // valid placement values botleft, botcenter, botright, topleft, topcenter, topright
     placement = placement || "botcenter"; // default
+    var largeCenterWidthRatio = 0.75
 
     getGeometry();
     // calculate window width
@@ -138,15 +174,17 @@ function tile6(placement) {
     if (placement == "topleft" || placement == "topcenter" || placement == "topright") {
         newHeight = screenGeometry.height - newHeight;
     }
-    resize(newWidth, newHeight);
 
-    var referenceX = (screenGeometry.width - client.width) / 2;
+    var referenceX = (screenGeometry.width - newWidth) / 2;
     var newX = screenGeometry.x + referenceX;
-    var newY = screenGeometry.y + (screenGeometry.height - client.height);
+    var newY = screenGeometry.y + (screenGeometry.height - newHeight);
 
     if (placement == "topleft" || placement == "topcenter" || placement == "topright") {
         newY = screenGeometry.y;
     }
+
+    newX = Math.trunc(newX);
+    newY = Math.trunc(newY);
 
     switch (placement) {
         case "botleft":
@@ -155,19 +193,25 @@ function tile6(placement) {
             break;
         case "botright":
         case "topright":
-            newX = screenGeometry.width - client.width - xMargin;
+            newX = screenGeometry.width - newWidth - xMargin;
             break;
         case "topcenter":
         case "botcenter":
-            // do nothing
+            // if new position is same as current position then make it extra wide
+            if ( newX == client.frameGeometry.x && newY == client.frameGeometry.y) {
+                newWidth = (screenGeometry.width * largeCenterWidthRatio);
+                newX = Math.trunc( screenGeometry.x + (screenGeometry.width / 2) - (newWidth / 2) );
+            }
             break;
         default:
-            // this position should indicate error on screen
+            // this position should indicate 'placement' error on screen
+            print("RCTiler:tile6() unknown placement name: ", placement)
             newX = 70;
             newY = 20;
             break;
     }
     move(newX, newY);
+    resize(newWidth, newHeight);
 }
 
 function focus1(style) {

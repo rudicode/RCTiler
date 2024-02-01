@@ -1,11 +1,23 @@
+
+Docs
+https://develop.kde.org/docs/plasma/kwin/
+https://develop.kde.org/docs/plasma/kwin/api/
+
+
 Notes for writing kwin-scripts
+------------------------------
 
 # Install new script
-# plasmapkg2 --type kwinscript -i ~/code/kwin-scripts/mynewscrip/
+# (older kde) ==> plasmapkg2 --type kwinscript -i ~/code/kwin-scripts/mynewscrip/
+
+kpackagetool5 --type=KWin/Script -u ~/code/kwin-scripts/RCTiler/
+
 
 # Update existing script
 ####(older ver)#### plasmapkg2 --type kwinscript -u ~/code/kwin-scripts/myexistingscript/
+
 kpackagetool5 --type=KWin/Script -u ~/code/kwin-scripts/RCTiler/
+
 
 # To take effect restart kwin
 # this does not work in kde5

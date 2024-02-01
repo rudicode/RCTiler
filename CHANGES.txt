@@ -1,3 +1,7 @@
+Version 0.4.7
+  - When tile4() botcenter and topcenter, expand to larger width on second keypress.
+  - When tile6() botcenter and topcenter, expand to larger width on second keypress.
+
 Version 0.4.6
   - Fix how topright and bottomright are calculated in tile4
   - updated install script, so it can be used from anywhere.

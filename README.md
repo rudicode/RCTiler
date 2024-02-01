@@ -29,6 +29,7 @@ Focus1 - place window in center and cycle between resize Landscape and Portrait
 
 ( Meta+Ctrl+Num+8 ) resize to half screen height keep screen aspect ratio, place in x-center and y to top
 ( Meta+Ctrl+Num+2 ) resize to half screen height keep screen aspect ratio, place in x-center and y to bot
+Pressing key again will toggle window width between normal and extra wide.
 +--+-----+--+
 |  |  8  |  |
 |  +-----+  |
@@ -60,6 +61,7 @@ Tile6 - place windows on 3x2 grid
 +---+---+---+
 bottom height ratio (default 55%)
 center width ratio (default 40%)
+Pressing 2,8 keys again will toggle window width between normal and extra wide.
 
 Focus1 - place window in center and cycle resize Landscape and Portrait
 ( Meta+Num+5 )
